@@ -1,17 +1,18 @@
 from flask import Flask, request, jsonify
-from transformers import BertTokenizer, BertForSequenceClassification
+from transformers import BertTokenizer, BertForSequenceClassification,AutoModelForSequenceClassification, AutoTokenizer
 import torch
 import pickle
 
 app = Flask(__name__)
-
 # Load model, tokenizer, and label encoder
 MODEL_DIR = "./saved_model"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-model = BertForSequenceClassification.from_pretrained(MODEL_DIR)
-tokenizer = BertTokenizer.from_pretrained(MODEL_DIR)
+MODEL_NAME = "ByteMaster27/SentimentModel"
+model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 model.to(device)
+
 
 with open(f"{MODEL_DIR}/label_encoder.pkl", "rb") as f:
     label_encoder = pickle.load(f)
