@@ -5,7 +5,7 @@ import pickle
 
 app = Flask(__name__)
 # Load model, tokenizer, and label encoder
-MODEL_DIR = "../saved_model"
+MODEL_DIR = "./saved_model"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 MODEL_NAME = "ByteMaster27/SentimentModel"
