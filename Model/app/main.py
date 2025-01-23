@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from transformers import BertTokenizer, BertForSequenceClassification,AutoModelForSequenceClassification, AutoTokenizer
 import torch
 import pickle
+import os
 
 app = Flask(__name__)
 # Load model, tokenizer, and label encoder
@@ -43,4 +44,5 @@ def predict():
     return jsonify({"results": results})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Fetch port from environment variable
+    app.run(host="0.0.0.0", port=port, debug=True)  # Bind to all interfaces and the correct port
